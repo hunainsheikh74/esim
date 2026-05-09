@@ -1,18 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Java App</title>
-    <script src="main.js"></script>
-<script type="module" src="app.js"></script>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eSIM Data Check</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script type="module" src="app.js"></script>
+
 </head>
+<div class="overlay-loader" id="overlayLoader">
+  <div class="spinner"></div>
+</div>
+<div class="popup-overlay" id="popup">
+
+  <div class="popup-box">
+
+    <div class="popup-glow"></div>
+
+    <h2>Data Remaining</h2>
+
+    <div class="mbs" id="mbsValue">
+  0 MB
+</div>
+
+    <p>Your eSIM package is active and ready to use.</p>
+
+    <button >
+      OK
+    </button>
+
+  </div>
+
+</div>
 <body>
 
-    <h1>Welcome to My Java Project</h1>
-    <p>This is a basic HTML index page.</p>
+  <div class="container">
 
-    
+    <!-- Header -->
+    <header class="topbar">
+      <div class="logo-box">
+        <div class="logo-icon">📄</div>
+        <span>eSIM Service</span>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+      <div class="badge">
+        Check Your eSIM Data
+      </div>
+
+      <div class="plane">✈</div>
+
+      <h1>
+        Stay Connected,<br>
+        <span>Anywhere.</span>
+      </h1>
+
+     
+      <!-- Card -->
+      <div class="card">
+
+        <label>eSIM ID</label>
+
+        <input id="esimInput" type="text" placeholder="Enter your eSIM ID">
+
+        <button>
+          <span class="search-icon">⌕</span>
+          Check Remaining Data
+        </button>
+
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="whatsapp-box">
+        <div class="whatsapp-icon">
+  <i class="fa-brands fa-whatsapp"></i>
+</div>
+
+        <div>
+          <p>Need help? Contact us on WhatsApp</p>
+          <h3>03700131667</h3>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+
+      <div class="feature">
+        <div class="feature-icon">🌐</div>
+        <h3>Global Coverage</h3>
+        <p>200+ countries</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="feature">
+        <div class="feature-icon">🛡</div>
+        <h3>Secure & Private</h3>
+        <p>Your data is safe</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Access</h3>
+        <p>Check in seconds</p>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-lock">🔒</div>
+      <p>Trusted by thousands of travelers worldwide</p>
+    </footer>
+
+  </div>
 
 </body>
 </html>
