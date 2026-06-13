@@ -432,6 +432,7 @@ footer p {
   font-weight: 700;
   background: linear-gradient(90deg, #005eff, #4f8cff);
   -webkit-background-clip: text;
+background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 18px;
   animation: bounce 2s infinite;
@@ -560,4 +561,10 @@ footer p {
   100% {
     transform: rotate(360deg);
   }
+}
+
+#widget {
+  background: linear-gradient(90deg, #00a86b, #30D158);
+  box-shadow: 0 10px 25px rgba(48,209,88,0.25);
+  margin-top: 12px;
 }
