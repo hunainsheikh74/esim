@@ -2,133 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>eSIM Data Check</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>eSIM · Liquid Glass</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script type="module" src="app.js"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9583772821141880"
-     crossorigin="anonymous"></script>
 </head>
-<div class="overlay-loader" id="overlayLoader">
-  <div class="spinner"></div>
-</div>
-<div class="popup-overlay" id="popup">
-
-  <div class="popup-box">
-
-    <div class="popup-glow"></div>
-
-    <h2>Data Remaining</h2>
-
-    <div class="mbs" id="mbsValue">
-  0 MB
-</div>
-
-    <p>Your eSIM package is active and ready to use.</p>
-
-    <button>
-      OK
-    </button>
-
-    <button id="widget">
-      Install Widget
-    </button>
-
-  </div>
-</div>
 <body>
 
-  <div class="container">
+    <!-- ===== LIQUID GLASS BACKGROUND ===== -->
+    <div class="liquid-bg">
+        <div class="liquid-blob blob-1"></div>
+        <div class="liquid-blob blob-2"></div>
+        <div class="liquid-blob blob-3"></div>
+        <div class="liquid-blob blob-4"></div>
+        <div class="liquid-blob blob-5"></div>
+        <div class="glass-overlay"></div>
+        <div class="grain-overlay"></div>
+    </div>
 
-    <!-- Header -->
-    <header class="topbar">
-      <div class="logo-box">
-        <div class="logo-icon">📄</div>
-        <span>eSIM Service</span>
-      </div>
-    </header>
+    <!-- ===== OVERLAY LOADER ===== -->
+    <div class="overlay-loader" id="overlayLoader">
+        <div class="spinner"></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-
-      <div class="badge">
-        Check Your eSIM Data
-      </div>
-
-      <div class="plane">✈</div>
-
-      <h1>
-        Stay Connected,<br>
-        <span>Anywhere.</span>
-      </h1>
-
-     
-      <!-- Card -->
-      <div class="card">
-
-        <label>eSIM ID</label>
-
-        <input id="esimInput" type="text" placeholder="Enter your eSIM ID">
-
-        <button>
-          <span class="search-icon">⌕</span>
-          Check Remaining Data
-        </button>
-
-      </div>
-
-      <!-- WhatsApp -->
-      <div class="whatsapp-box">
-        <div class="whatsapp-icon">
-  <i class="fa-brands fa-whatsapp"></i>
-</div>
-
-        <div>
-          <p>Need help? Contact us on WhatsApp</p>
-          
+    <!-- ===== POPUP ===== -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-box glass">
+            <div class="popup-glow"></div>
+            <div class="popup-shine"></div>
+            <div class="popup-ring"></div>
+            <h2>Data Remaining</h2>
+            <div class="mbs" id="mbsValue">0 MB</div>
+            <p>Your eSIM package is active and ready to use.</p>
+            <button class="glass-btn primary">OK</button>
+            <button class="glass-btn gold" id="widget">Install Widget</button>
         </div>
-      </div>
+    </div>
 
-    </section>
+    <!-- ===== MAIN ===== -->
+    <div class="container">
 
-    <!-- Features -->
-    <section class="features">
+        <!-- Header -->
+        <header class="topbar">
+            <div class="logo-box glass">
+                <div class="logo-icon">📄</div>
+                <span>eSIM Service</span>
+            </div>
+        </header>
 
-      <div class="feature">
-        <div class="feature-icon">🌐</div>
-        <h3>Global Coverage</h3>
-        <p>200+ countries</p>
-      </div>
+        <!-- Hero -->
+        <section class="hero">
 
-      <div class="divider"></div>
+            <div class="badge glass">
+                <span class="badge-shimmer"></span>
+                <span class="badge-dot"></span>
+                Check Your eSIM Data
+            </div>
 
-      <div class="feature">
-        <div class="feature-icon">🛡</div>
-        <h3>Secure & Private</h3>
-        <p>Your data is safe</p>
-      </div>
+            <div class="plane">✈</div>
 
-      <div class="divider"></div>
+            <h1>
+                Stay Connected,<br>
+                <span>Anywhere.</span>
+            </h1>
 
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <h3>Instant Access</h3>
-        <p>Check in seconds</p>
-      </div>
+            <!-- Card -->
+            <div class="card glass">
+                <div class="card-shine"></div>
+                <div class="card-border-glow"></div>
+                <label>eSIM ID</label>
+                <input id="esimInput" type="text" placeholder="Enter your eSIM ID" class="glass-input">
+                <button class="glass-btn primary">
+                    <span class="search-icon">⌕</span>
+                    Check Remaining Data
+                </button>
+            </div>
 
-    </section>
+            <!-- Recent Checks History -->
+            <div class="history-panel glass" id="historyPanel">
+                <div class="history-title">
+                    <span>Recent Checks</span>
+                    <button type="button" class="history-clear" id="historyClear">Clear</button>
+                </div>
+                <ul class="history-list" id="historyList">
+                    <li class="history-empty">No checks yet</li>
+                </ul>
+            </div>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-lock">🔒</div>
-      <p>Trusted by thousands of travelers worldwide</p>
-    </footer>
+            <!-- WhatsApp -->
+            <div class="whatsapp-box glass">
+                <div class="whatsapp-icon">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div>
+                    <p>Need help? Contact us on WhatsApp</p>
+                </div>
+            </div>
 
-  </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features glass">
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h3>Global Coverage</h3>
+                <p>200+ countries</p>
+            </div>
+            <div class="divider"></div>
+            <div class="feature">
+                <div class="feature-icon">🛡</div>
+                <h3>Secure & Private</h3>
+                <p>Your data is safe</p>
+            </div>
+            <div class="divider"></div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Access</h3>
+                <p>Check in seconds</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-lock">🔒</div>
+            <p>Trusted by thousands of travelers worldwide</p>
+        </footer>
+
+    </div>
 
 </body>
 </html>
