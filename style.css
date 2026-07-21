@@ -47,6 +47,9 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .container {
@@ -937,17 +940,14 @@ footer p {
     outline-offset: 2px;
 }
 
-/* ===== SCROLLBAR ===== */
+/* ===== SCROLLBAR — hidden, app-like (scrolling still works) ===== */
+html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* old Edge/IE */
+}
+
 ::-webkit-scrollbar {
-    width: 3px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: rgba(45, 212, 191, 0.25);
-    border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(45, 212, 191, 0.4);
+    display: none; /* Chrome, Safari, newer Edge */
+    width: 0;
+    height: 0;
 }
