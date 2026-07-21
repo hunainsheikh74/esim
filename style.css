@@ -348,6 +348,7 @@ body {
     padding: 8px 22px 8px 8px;
     border-radius: var(--r-md);
     letter-spacing: -0.3px;
+    animation: fadeUp 0.6s var(--ease-spring) both;
 }
 
 .logo-icon {
@@ -383,7 +384,7 @@ body {
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
-    animation: fadeUp 0.7s var(--ease-spring) both;
+    animation: fadeUp 0.7s 0.08s var(--ease-spring) both;
 }
 
 .badge-dot {
@@ -408,8 +409,13 @@ body {
     right: 34px;
     top: 46px;
     font-size: 20px;
-    opacity: 0.28;
-    animation: fly 12s ease-in-out infinite;
+    opacity: 0;
+    animation: planeEnter 0.6s 0.16s var(--ease-spring) both, fly 12s 0.76s ease-in-out infinite;
+}
+
+@keyframes planeEnter {
+    from { opacity: 0; transform: translateX(10px) rotate(8deg); }
+    to { opacity: 0.28; transform: translateX(0) rotate(0deg); }
 }
 
 @keyframes fly {
@@ -424,7 +430,7 @@ body {
     margin-bottom: 20px;
     color: var(--ink-1);
     letter-spacing: -1.6px;
-    animation: fadeUp 0.8s 0.05s var(--ease-spring) both;
+    animation: fadeUp 0.8s 0.16s var(--ease-spring) both;
 }
 
 .hero h1 span {
@@ -446,7 +452,7 @@ body {
     border-radius: var(--r-lg);
     padding: 38px 38px;
     text-align: left;
-    animation: fadeUp 0.9s 0.1s var(--ease-spring) both;
+    animation: fadeUp 0.85s 0.24s var(--ease-spring) both;
     overflow: visible;
 }
 
@@ -512,7 +518,7 @@ body {
     max-width: 560px;
     padding: 20px 24px;
     border-radius: var(--r-md);
-    animation: fadeUp 0.9s 0.14s var(--ease-spring) both;
+    animation: fadeUp 0.85s 0.32s var(--ease-spring) both;
     contain: content;
 }
 
@@ -611,6 +617,7 @@ body {
     max-width: 420px;
     margin-left: auto;
     margin-right: auto;
+    animation: fadeUp 0.8s 0.4s var(--ease-spring) both;
 }
 
 .whatsapp-icon {
@@ -650,6 +657,7 @@ body {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    animation: fadeUp 0.8s 0.48s var(--ease-spring) both;
 }
 
 .feature {
@@ -657,7 +665,13 @@ body {
     min-width: 130px;
     text-align: center;
     padding: 8px 12px;
+    opacity: 0;
+    animation: fadeUp 0.6s var(--ease-spring) both;
 }
+
+.feature:nth-child(1) { animation-delay: 0.56s; }
+.feature:nth-child(3) { animation-delay: 0.62s; }
+.feature:nth-child(5) { animation-delay: 0.68s; }
 
 .feature-icon {
     font-size: 24px;
@@ -691,6 +705,7 @@ footer {
     color: var(--ink-4);
     position: relative;
     z-index: 2;
+    animation: fadeUp 0.8s 0.72s var(--ease-spring) both;
 }
 
 .footer-lock {
@@ -717,7 +732,7 @@ footer p {
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.45s ease;
     z-index: 999;
     padding: 20px;
 }
@@ -734,14 +749,36 @@ footer p {
     padding: 40px 28px 46px;
     text-align: center;
     position: relative;
-    transform: scale(0.94) translateY(14px);
-    transition: transform 0.4s var(--ease-spring), opacity 0.3s ease;
+    transform: scale(0.7) translateY(50px) rotate(-4deg) translateZ(0);
     opacity: 0;
 }
 
 .popup-overlay.show .popup-box {
-    transform: scale(1) translateY(0);
-    opacity: 1;
+    animation: popIn 0.6s var(--ease-spring) both;
+    will-change: transform, opacity;
+}
+
+.popup-overlay:not(.show) .popup-box {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* transform + opacity only — compositor-only, no paint/layout cost, steady 60fps */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(50px) rotate(-4deg) translateZ(0);
+    }
+    55% {
+        opacity: 1;
+        transform: scale(1.045) translateY(-6px) rotate(0.6deg) translateZ(0);
+    }
+    75% {
+        transform: scale(0.985) translateY(2px) rotate(-0.2deg) translateZ(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotate(0deg) translateZ(0);
+    }
 }
 
 .popup-glow {
@@ -752,8 +789,19 @@ footer p {
     top: -20px;
     left: 50%;
     transform: translateX(-50%);
+    opacity: 0;
     animation: pulseGlow 5s ease-in-out infinite;
     pointer-events: none;
+}
+
+.popup-overlay.show .popup-glow {
+    animation: glowIntro 0.5s 0.15s ease-out both, pulseGlow 5s 0.5s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes glowIntro {
+    from { opacity: 0; transform: translateX(-50%) scale(0.4); }
+    to { opacity: 0.5; transform: translateX(-50%) scale(1); }
 }
 
 /* popup-shine: repurposed as the ticket stub barcode strip, pinned to the
@@ -791,26 +839,63 @@ footer p {
 .popup-box h2 {
     font-size: 13px;
     color: var(--ink-3);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
     position: relative;
     z-index: 2;
     font-weight: 700;
     letter-spacing: 1.6px;
     text-transform: uppercase;
+    opacity: 0;
+}
+
+.popup-overlay.show .popup-box h2 {
+    animation: fadeUp 0.5s 0.22s var(--ease-spring) both;
 }
 
 .mbs {
-    font-size: 42px;
-    font-weight: 700;
+    font-size: 56px;
+    font-weight: 800;
     font-family: var(--mono);
-    background: linear-gradient(120deg, var(--blue), var(--violet) 55%, var(--gold));
+    background: linear-gradient(120deg, var(--blue), var(--violet) 45%, var(--gold), var(--blue));
+    background-size: 250% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     position: relative;
     z-index: 2;
-    letter-spacing: -0.5px;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    opacity: 0;
+    /* static drop-shadow, never animated — costs one paint, not one per frame */
+    filter: drop-shadow(0 0 18px rgba(139, 124, 246, 0.35));
+}
+
+.popup-overlay.show .mbs {
+    /* single bounded sweep (not infinite) — transform+opacity do the pop,
+       background-position runs once so cost is one-shot, not per-frame forever */
+    animation: mbsPopIn 0.75s 0.3s var(--ease-spring) both;
+    will-change: transform, opacity, background-position;
+}
+
+@keyframes mbsPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) translateY(18px) translateZ(0);
+        background-position: 0% 50%;
+    }
+    55% {
+        opacity: 1;
+        transform: scale(1.18) translateY(-8px) translateZ(0);
+    }
+    75% {
+        transform: scale(0.94) translateY(2px) translateZ(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) translateZ(0);
+        background-position: 100% 50%;
+    }
 }
 
 .popup-box p {
@@ -821,6 +906,11 @@ footer p {
     position: relative;
     z-index: 2;
     font-weight: 400;
+    opacity: 0;
+}
+
+.popup-overlay.show .popup-box p {
+    animation: fadeUp 0.5s 0.4s var(--ease-spring) both;
 }
 
 .popup-box button {
@@ -832,6 +922,15 @@ footer p {
     position: relative;
     z-index: 2;
     letter-spacing: 0.2px;
+    opacity: 0;
+}
+
+.popup-overlay.show .popup-box button {
+    animation: fadeUp 0.5s 0.48s var(--ease-spring) both;
+}
+
+.popup-overlay.show .popup-box button:last-of-type {
+    animation-delay: 0.54s;
 }
 
 .popup-box button:not(:last-of-type) {
@@ -894,7 +993,7 @@ footer p {
     footer p { font-size: 12.5px; }
     .plane { font-size: 16px; top: 40px; right: 20px; }
     .popup-box { padding: 30px 20px 40px; border-radius: 24px; }
-    .mbs { font-size: 32px; }
+    .mbs { font-size: 44px; }
     .popup-box h2 { font-size: 12px; }
     .popup-box p { font-size: 12.5px; margin-bottom: 24px; }
     .popup-box button { height: 46px; font-size: 14px; }
@@ -917,7 +1016,7 @@ footer p {
     .card button { height: 48px; font-size: 14px; border-radius: 10px; }
     .whatsapp-box h3 { font-size: 16px; }
     .popup-box { padding: 26px 16px 34px; border-radius: 20px; }
-    .mbs { font-size: 27px; }
+    .mbs { font-size: 36px; }
     .popup-box button { height: 44px; font-size: 13.5px; }
     .badge { font-size: 9.5px; padding: 6px 14px 6px 10px; }
     .plane { font-size: 13px; top: 36px; right: 16px; }
