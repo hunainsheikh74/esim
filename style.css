@@ -10,10 +10,10 @@
 :root {
     --bg-0: #050908;
     --bg-1: #0a1a17;
-    --ink-1: #eef1fb;
-    --ink-2: rgba(238, 241, 251, 0.6);
-    --ink-3: rgba(238, 241, 251, 0.34);
-    --ink-4: rgba(238, 241, 251, 0.16);
+    --ink-1: #e9edf4;
+    --ink-2: rgba(233, 237, 244, 0.66);
+    --ink-3: rgba(233, 237, 244, 0.42);
+    --ink-4: rgba(233, 237, 244, 0.3);
     --line: rgba(255, 255, 255, 0.09);
     --line-soft: rgba(255, 255, 255, 0.05);
     --panel: rgba(255, 255, 255, 0.05);
@@ -54,6 +54,10 @@ body {
     min-height: 100vh;
     position: relative;
     z-index: 2;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* ===== AMBIENT BACKGROUND (cheap: transform-only blobs, no backdrop-filter) ===== */
@@ -138,6 +142,84 @@ body {
     pointer-events: none;
 }
 
+/* Starfield: one element, positions painted once via box-shadow/gradients,
+   only opacity animates (compositor-only) — negligible cost. */
+.starfield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1.6px 1.6px at 8% 22%, rgba(255, 255, 255, 0.85), transparent 100%),
+        radial-gradient(1.2px 1.2px at 18% 68%, rgba(255, 255, 255, 0.6), transparent 100%),
+        radial-gradient(1.6px 1.6px at 32% 12%, rgba(255, 255, 255, 0.75), transparent 100%),
+        radial-gradient(1.2px 1.2px at 47% 78%, rgba(255, 255, 255, 0.55), transparent 100%),
+        radial-gradient(1.6px 1.6px at 61% 30%, rgba(255, 255, 255, 0.8), transparent 100%),
+        radial-gradient(1.2px 1.2px at 74% 58%, rgba(255, 255, 255, 0.6), transparent 100%),
+        radial-gradient(1.6px 1.6px at 88% 15%, rgba(255, 255, 255, 0.75), transparent 100%),
+        radial-gradient(1.2px 1.2px at 14% 90%, rgba(255, 255, 255, 0.5), transparent 100%),
+        radial-gradient(1.6px 1.6px at 57% 92%, rgba(255, 255, 255, 0.65), transparent 100%),
+        radial-gradient(1.2px 1.2px at 93% 82%, rgba(255, 255, 255, 0.55), transparent 100%),
+        radial-gradient(1.2px 1.2px at 39% 44%, rgba(255, 255, 255, 0.5), transparent 100%),
+        radial-gradient(1.2px 1.2px at 80% 40%, rgba(255, 255, 255, 0.55), transparent 100%);
+    background-repeat: no-repeat;
+    animation: twinkle 5s ease-in-out infinite alternate;
+    will-change: opacity;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.35; }
+    100% { opacity: 0.85; }
+}
+
+/* Falling stars: 14 tiny dots, transform + opacity only (GPU compositor).
+   Each one gets its own fall angle/distance/size/timing (via --dx/--dy custom
+   properties) so they read as independent stars, not one parallel-moving group. */
+.shooting-stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shooting-stars span {
+    --dx: -220px;
+    --dy: 190px;
+    position: absolute;
+    top: 8%;
+    left: 85%;
+    width: 2.5px;
+    height: 2.5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: shootingFall linear infinite;
+}
+
+.shooting-stars span:nth-child(1)  { top: 4%;  left: 76%; width: 2px;   height: 2px;   --dx: -160px; --dy: 260px; animation-duration: 8.4s;  animation-delay: 0s; }
+.shooting-stars span:nth-child(2)  { top: 12%; left: 90%; width: 3px;   height: 3px;   --dx: -260px; --dy: 140px; animation-duration: 11.3s; animation-delay: 0.9s; }
+.shooting-stars span:nth-child(3)  { top: 20%; left: 62%; width: 2.5px; height: 2.5px; --dx: -190px; --dy: 300px; animation-duration: 9.7s;  animation-delay: 1.7s; }
+.shooting-stars span:nth-child(4)  { top: 28%; left: 96%; width: 2px;   height: 2px;   --dx: -320px; --dy: 110px; animation-duration: 10.1s; animation-delay: 2.3s; }
+.shooting-stars span:nth-child(5)  { top: 36%; left: 70%; width: 3px;   height: 3px;   --dx: -150px; --dy: 220px; animation-duration: 8.9s;  animation-delay: 3.1s; }
+.shooting-stars span:nth-child(6)  { top: 44%; left: 85%; width: 2px;   height: 2px;   --dx: -280px; --dy: 250px; animation-duration: 11.8s; animation-delay: 3.6s; }
+.shooting-stars span:nth-child(7)  { top: 52%; left: 58%; width: 2.5px; height: 2.5px; --dx: -170px; --dy: 130px; animation-duration: 9.3s;  animation-delay: 4.4s; }
+.shooting-stars span:nth-child(8)  { top: 60%; left: 92%; width: 3px;   height: 3px;   --dx: -240px; --dy: 300px; animation-duration: 10.6s; animation-delay: 5.2s; }
+.shooting-stars span:nth-child(9)  { top: 68%; left: 66%; width: 2px;   height: 2px;   --dx: -200px; --dy: 170px; animation-duration: 8.6s;  animation-delay: 6s; }
+.shooting-stars span:nth-child(10) { top: 76%; left: 98%; width: 2.5px; height: 2.5px; --dx: -300px; --dy: 210px; animation-duration: 11.1s; animation-delay: 6.5s; }
+.shooting-stars span:nth-child(11) { top: 16%; left: 40%; width: 2px;   height: 2px;   --dx: -140px; --dy: 280px; animation-duration: 9.9s;  animation-delay: 7.3s; }
+.shooting-stars span:nth-child(12) { top: 56%; left: 34%; width: 3px;   height: 3px;   --dx: -250px; --dy: 160px; animation-duration: 10.4s; animation-delay: 7.9s; }
+.shooting-stars span:nth-child(13) { top: 82%; left: 55%; width: 2px;   height: 2px;   --dx: -180px; --dy: 240px; animation-duration: 8.8s;  animation-delay: 8.7s; }
+.shooting-stars span:nth-child(14) { top: 8%;  left: 20%; width: 2.5px; height: 2.5px; --dx: -230px; --dy: 120px; animation-duration: 11.5s; animation-delay: 9.4s; }
+
+@keyframes shootingFall {
+    0% { transform: translate(0, 0); opacity: 0; }
+    6% { opacity: 1; }
+    34% { opacity: 1; }
+    42% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+    100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+
 @keyframes liquidFloat {
     0%   { transform: translate(0, 0) scale(1); }
     50%  { transform: translate(-40px, 48px) scale(0.94); }
@@ -169,7 +251,6 @@ body {
 }
 
 /* Static top sheen — no infinite animation, near-zero cost */
-.card-shine,
 .popup-shine {
     content: '';
 }
@@ -355,43 +436,16 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== CARD — styled as a boarding-pass / ticket for the eSIM ===== */
+/* ===== CARD ===== */
 .card {
     margin: 36px auto 0;
     max-width: 560px;
     border-radius: var(--r-lg);
-    padding: 38px 38px 62px;
+    padding: 38px 38px;
     text-align: left;
     animation: fadeUp 0.9s 0.1s var(--ease-spring) both;
     overflow: visible;
 }
-
-/* card-shine: repurposed as the ticket's perforated tear-line + barcode stub,
-   pinned to the bottom of the card so it can never overlap the button. */
-.card-shine {
-    position: absolute;
-    left: 24px;
-    right: 24px;
-    bottom: 26px;
-    height: 0;
-    border-top: 1.5px dashed var(--line);
-    pointer-events: none;
-}
-
-.card-shine::before,
-.card-shine::after {
-    content: '';
-    position: absolute;
-    top: -9px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--bg-0);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-}
-
-.card-shine::before { left: -33px; }
-.card-shine::after { right: -33px; }
 
 .card-border-glow {
     position: absolute;
@@ -821,7 +875,7 @@ footer p {
     .logo-icon { width: 32px; height: 32px; font-size: 14px; border-radius: 9px; }
     .badge { font-size: 10.5px; padding: 7px 16px 7px 12px; margin-bottom: 24px; }
     .hero h1 { font-size: 32px; letter-spacing: -0.9px; }
-    .card { padding: 24px 20px 50px; border-radius: 24px; }
+    .card { padding: 24px 20px; border-radius: 24px; }
     .card label { font-size: 11px; }
     .card input { height: 52px; font-size: 16px; border-radius: var(--r-sm); padding: 0 16px; }
     .card button { height: 52px; font-size: 15px; border-radius: var(--r-sm); }
@@ -854,7 +908,7 @@ footer p {
 
 @media (max-width: 480px) {
     .hero h1 { font-size: 27px; }
-    .card { padding: 18px 16px 46px; border-radius: 20px; }
+    .card { padding: 18px 16px; border-radius: 20px; }
     .card label { font-size: 10.5px; }
     .card input { height: 48px; font-size: 15px; padding: 0 14px; border-radius: 10px; }
     .card button { height: 48px; font-size: 14px; border-radius: 10px; }
@@ -864,8 +918,8 @@ footer p {
     .popup-box button { height: 44px; font-size: 13.5px; }
     .badge { font-size: 9.5px; padding: 6px 14px 6px 10px; }
     .plane { font-size: 13px; top: 36px; right: 16px; }
-    .topbar { padding: 20px 16px 6px; }
-    .hero { padding: 6px 16px 30px; }
+    .topbar { padding: calc(20px + env(safe-area-inset-top, 0px)) calc(20px + env(safe-area-inset-right, 0px)) 6px calc(20px + env(safe-area-inset-left, 0px)); }
+    .hero { padding: 8px calc(20px + env(safe-area-inset-right, 0px)) 30px calc(20px + env(safe-area-inset-left, 0px)); }
 }
 
 /* ===== MOTION & ACCESSIBILITY ===== */
